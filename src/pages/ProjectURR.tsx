@@ -127,7 +127,7 @@ export default function ProjectURR() {
         <SectionHeading label="스크린샷" />
         <div className="grid grid-cols-2 gap-3">
           {['urr-1.png', 'urr-2.png', 'urr-3.png', 'urr-4.png'].map((src) => (
-            <img key={src} src={`/${src}`} alt={src} onClick={() => setLightbox(`/${src}`)} className="rounded-lg border border-border w-full object-cover cursor-zoom-in hover:opacity-90 transition-opacity" />
+            <img key={src} src={`/${src}`} alt={src} onClick={() => setLightbox(`/${src}`)} className="rounded-lg border border-border w-full h-48 object-cover cursor-zoom-in hover:opacity-90 transition-opacity" />
           ))}
         </div>
         {lightbox && <Lightbox src={lightbox} onClose={() => setLightbox(null)} />}

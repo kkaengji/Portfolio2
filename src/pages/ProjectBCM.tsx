@@ -127,7 +127,7 @@ export default function ProjectBCM() {
         <SectionHeading label="스크린샷" />
         <div className="grid grid-cols-2 gap-3">
           {['bcm-1.png', 'bcm-2.png', 'bcm-3.png', 'bcm-4.png'].map((src) => (
-            <img key={src} src={`/${src}`} alt={src} onClick={() => setLightbox(`/${src}`)} className="rounded-lg border border-border w-full object-cover cursor-zoom-in hover:opacity-90 transition-opacity" />
+            <img key={src} src={`/${src}`} alt={src} onClick={() => setLightbox(`/${src}`)} className="rounded-lg border border-border w-full h-48 object-cover cursor-zoom-in hover:opacity-90 transition-opacity" />
           ))}
         </div>
         {lightbox && <Lightbox src={lightbox} onClose={() => setLightbox(null)} />}

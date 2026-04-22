@@ -18,7 +18,6 @@ import {
   Zap,
   Mail,
   Github,
-  ExternalLink,
   Sun,
   Moon,
   ArrowUp,
@@ -95,7 +94,10 @@ export function CommandPalette() {
           <CommandItem
             onSelect={() => run(() => window.open(contact.blog, '_blank'))}
           >
-            <ExternalLink />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <polyline points="7.5,8 12,16 16.5,8" />
+            </svg>
             <span>Blog (Velog)</span>
           </CommandItem>
           <CommandItem

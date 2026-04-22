@@ -1,5 +1,5 @@
 import { contact, profile } from "@/data/profile";
-import { Github, BookOpen, Mail } from "lucide-react";
+import { Github, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -22,10 +22,13 @@ export function Footer() {
             href={contact.blog}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Blog"
+            aria-label="Velog"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
-            <BookOpen className="h-4 w-4" />
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <polyline points="7.5,8 12,16 16.5,8" />
+            </svg>
           </a>
           <a
             href={`mailto:${contact.email}`}

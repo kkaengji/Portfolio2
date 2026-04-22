@@ -1,6 +1,6 @@
 import { contact, profile } from '@/data/profile'
 import { Button } from '@/components/ui/button'
-import { Github, ExternalLink, Mail, Copy, Check, FileDown } from 'lucide-react'
+import { Github, Mail, Copy, Check, FileDown } from 'lucide-react'
 import { useState } from 'react'
 
 export function ContactSection() {
@@ -63,7 +63,10 @@ export function ContactSection() {
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ExternalLink className="h-4 w-4" />
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <polyline points="7.5,8 12,16 16.5,8" />
+            </svg>
             Velog
           </a>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { profile, contact } from "@/data/profile";
 import { Button } from "@/components/ui/button";
-import { Github, BookOpen } from "lucide-react";
+import { Github } from "lucide-react";
 
 const TYPING_LINES = [
   "Frontend Developer",
@@ -111,7 +111,10 @@ export function HeroSection() {
               rel="noopener noreferrer"
               aria-label="Velog 블로그"
             >
-              <BookOpen className="h-4 w-4" />
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <polyline points="7.5,8 12,16 16.5,8" />
+              </svg>
             </a>
           </Button>
         </div>

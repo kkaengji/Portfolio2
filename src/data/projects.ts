@@ -27,9 +27,9 @@ export const projects: Project[] = [
     subtitle: "K-POP 팬 대상 공정 티켓팅 플랫폼",
     period: "2026.02 – 2026.04",
     description:
-      "FE 1인으로 45개 API·49회 PR 처리. Vite 프로토타입을 Next.js + FSD로 마이그레이션해 AI 에이전트 병렬 개발 환경을 구축했습니다. JWT를 JS 메모리·httpOnly 쿠키로 분리해 XSS를 차단하고, S3 배포 환경의 OAuth 토큰 유실은 sessionStorage 백업 계층으로 해결했습니다.",
+      "FE 1인으로 45개 API·49회 PR 처리. Vite 프로토타입을 Next.js + FSD로 마이그레이션해 AI 에이전트 병렬 개발 환경을 구축했습니다. S3+CloudFront 정적 배포 환경에서 OAuth 콜백 시 메모리 토큰 유실 문제를 sessionStorage 전환으로 해결하고, Refresh Token은 httpOnly 쿠키로 분리해 XSS 탈취 경로를 차단했습니다.",
     overview:
-      "15명 합동 팀(PM·디자인·백엔드·AI·클라우드·보안)에서 프론트엔드 전체를 1인 담당했습니다. 45개 엔드포인트 연동, 10개 라우트, 49회 PR 머지를 처리했습니다.\n\n디자인팀의 Vite + React 프로토타입을 Next.js 16 + FSD 구조로 마이그레이션해 AI 에이전트 병렬 개발 환경을 만들었습니다. Access Token은 JS 메모리, Refresh Token은 httpOnly 쿠키로 분리해 XSS 탈취 경로를 차단했고, TanStack Query v5로 실시간 좌석 데이터 캐시를 명시적으로 관리했습니다.",
+      "K-POP 팬을 위한 공정 티켓팅 플랫폼입니다. 멤버십 등급별 대기열 입장부터 인터랙티브 좌석 선택, 7분 임시 점유·결제, 안전 양도까지 전체 예매 플로우를 구현했습니다. PM·디자인·백엔드·AI·클라우드·보안 15명 합동 팀에서 프론트엔드를 1인 단독 담당했습니다.\n\n디자인팀의 Vite 프로토타입을 Next.js 16 + FSD 구조로 마이그레이션해 AI 에이전트 병렬 개발 환경을 구축했습니다. 45개 엔드포인트를 연동했고, Access Token은 sessionStorage, Refresh Token은 httpOnly 쿠키로 분리해 XSS 차단 및 OAuth 콜백 토큰 유실 문제를 해결했습니다.",
     role: "프론트엔드 1인 단독",
     stack: [
       "Next.js 16",
@@ -41,10 +41,13 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Vite → Next.js 16 + FSD 마이그레이션, 45개 API·49회 PR 머지",
-      "JWT 인증 — Access Token 메모리, Refresh Token httpOnly 쿠키로 XSS 차단",
+      "JWT 인증 — Access Token sessionStorage, Refresh Token httpOnly 쿠키로 XSS 차단",
       "폴링 기반 실시간 대기열 (10초 갱신, 멤버십 등급별 입장 차등)",
-      "SVG 기반 인터랙티브 좌석 선택 + 낙관적 UI + 결제 전 서버 재검증",
+      "SVG 인터랙티브 좌석 맵 — 구역별 잔여석 API + 개별 좌석 가용성 API 조합, 가용/선택/점유 3단계 색상 시각화 (Zustand)",
+      "7분 임시 점유 + 낙관적 UI + 결제 전 서버 재검증",
+      "예매 완료 QR 코드 + 마이티켓 월렛 — 예약 ID 기반 실 데이터 API 연동",
       "멤버십 4등급 권한 제어 (라이트닝/썬더/클라우드/미스트)",
+      "안전 양도 시스템 — 양도 게시판 + 양도 신청 플로우 API 연동",
     ],
     troubles: [
       {
@@ -72,13 +75,14 @@ export const projects: Project[] = [
     description:
       "폴링·SSE·WebSocket을 직접 비교해 WebSocket(STOMP)을 채택, 경매 ID 단위 채널 구독으로 불필요한 브로드캐스트를 차단했습니다. 병렬 요청 중 Refresh Token Race Condition을 subscriber 큐로 해결하고, IDOR를 프론트에서 이중 방어했습니다.",
     overview:
-      "폴링·SSE·WebSocket을 직접 비교 후 WebSocket(STOMP)을 채택했습니다. 경매 ID 단위로 채널을 구독 분리해 무관한 메시지 브로드캐스트를 차단했습니다.\n\n결제 승인은 Next.js API Route로 서버사이드 처리해 시크릿 키 노출을 막았고, 결제 페이지 진입 시 주문 조회 API를 강제 호출하는 IDOR 이중 방어 구조를 적용했습니다.",
+      "익명 기반 중고 경매 거래 플랫폼입니다. 판매자가 상품을 등록하면 구매자들이 실시간으로 입찰하고, 낙찰 후 결제까지 하나의 플로우로 연결됩니다. Frontend 2명(유저·관리자 사이트 분리), Backend 3명 팀 프로젝트에서 유저 사이트 프론트엔드 전체를 단독 담당했습니다.\n\n실시간 입찰 구현을 위해 폴링·SSE·WebSocket을 직접 비교 후 WebSocket(STOMP)을 채택했습니다. 경매 ID 단위 채널 구독으로 불필요한 브로드캐스트를 차단했고, TossPayments 결제 승인은 Next.js API Route로 서버사이드 처리해 시크릿 키를 격리했습니다.",
     role: "유저 사이트 FE 단독 (FE 2명 — 유저 사이트 · 관리자 사이트, BE 3명)",
     stack: [
       "Next.js 16",
       "TypeScript",
       "WebSocket (STOMP)",
       "TossPayments",
+      "AWS S3",
       "Tailwind",
       "shadcn/ui",
     ],
@@ -87,6 +91,8 @@ export const projects: Project[] = [
       "IDOR 이중방어 — 결제 페이지 진입 시 주문 조회 API 강제 호출, 서버 403 감지 후 리다이렉트",
       "TossPayments 서버사이드 결제 승인 (API Route로 시크릿 키 서버 격리)",
       "Intersection Observer 무한 스크롤",
+      "반응형 UI — 모바일 하단 네비게이션 분리로 PC/Mobile 동일 기능 제공",
+      "API 실패 시 Mock 데이터 폴백 — 백엔드 장애 상황에서도 화면 유지",
     ],
     troubles: [
       {
@@ -95,16 +101,16 @@ export const projects: Project[] = [
           "문제: /payment/{orderId} URL에서 orderId 변경 시 타인의 주문 정보 접근 및 의도치 않은 대납 가능.\n원인: UI 버튼 경유만 가정해 직접 URL 접근에 대한 프론트 접근 제어 부재, 서버 차단만으로는 렌더링 직전 데이터 노출 위험.\n해결: 페이지 진입 즉시 주문 조회 API 강제 호출, 서버 403·404 응답 감지 시 경고 메시지 표시 후 메인 리다이렉트.\n결과: URL 직접 접근을 통한 비인가 접근 차단, 비정상 접근 상황에서도 자연스러운 UX 유지.",
       },
       {
-        title: "Auth — 병렬 요청 중 토큰 재발급 Race Condition",
+        title: "WebSocket — 종료된 경매에서 구독 유지 및 중복 수신",
         content:
-          "문제: 여러 API 병렬 요청 중 401 발생 시 각 요청이 독립적으로 reissue를 시도해 Race Condition 발생.\n원인: Refresh Token Rotation 환경에서 두 번째 재발급 요청은 토큰이 이미 무효화되어 실패, 일부 요청이 로그아웃 처리될 위험.\n해결: isRefreshing 플래그 + refreshSubscribers 큐로 재발급을 정확히 1회만 수행, 대기 중인 요청은 완료 후 새 토큰으로 자동 재시도.\n결과: 다중 요청 환경에서 재발급 1회 보장, 불필요한 로그아웃 방지.",
+          "문제: 경매 종료 후에도 STOMP 구독이 유지되어 불필요한 메시지가 수신되고, 페이지 재진입 시 이전 구독이 해제되지 않아 동일 입찰 이벤트가 중복 처리됨.\n원인: useEffect 내 STOMP 클라이언트 생성 시 cleanup 처리 누락, 컴포넌트 언마운트 후에도 소켓 연결이 유지되어 재진입 시 기존 연결 위에 새 연결이 추가됨.\n해결: 페이지 진입 시 경매 종료 여부 사전 확인해 불필요한 연결 자체를 차단, useRef로 클라이언트 인스턴스를 관리해 cleanup에서 반드시 deactivate 호출.\n결과: 종료된 경매 진입 시 WebSocket 연결 요청 0건으로 감소, 중복 구독으로 인한 입찰 이벤트 중복 처리 제거.",
       },
     ],
     retrospective:
       "실시간 입찰 방식을 선택할 때 폴링 → SSE → WebSocket을 직접 비교하면서, '실시간이면 WebSocket'이 아니라 단방향/양방향, 서버 부하, 구조 복잡도를 기준으로 기술을 선택하는 방식을 처음으로 문서화해 봤습니다. IDOR를 프론트에서 직접 방어하면서 '서버가 막아주면 된다'는 생각 대신 프론트도 보안 레이어의 일부라는 인식이 생겼습니다.\n\n아쉬운 점은 실제 동시 입찰 트래픽에 대한 부하 테스트를 끝까지 진행하지 못한 것입니다. 다음 프로젝트에서는 초기 설계 단계부터 부하 테스트 시나리오를 포함할 계획입니다.",
     links: [
       { label: "Demo", url: "https://bcm.u-jinlee1029.store" },
-      { label: "YouTube", url: "https://youtube.com/watch?v=dM07anPjfsk" },
+      { label: "YouTube", url: "https://www.youtube.com/watch?v=dM07anPjfsk" },
     ],
     featured: true,
     tag: "팀 프로젝트",

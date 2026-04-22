@@ -2,11 +2,84 @@ import { Link } from 'react-router-dom'
 import { projects } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, ExternalLink, Check } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import { ArrowLeft, ExternalLink, Check, X } from 'lucide-react'
+import { useState, useEffect } from 'react'
+
+function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={onClose}>
+      <button className="absolute top-4 right-4 text-white/70 hover:text-white" onClick={onClose}>
+        <X className="h-6 w-6" />
+      </button>
+      <img src={src} alt="" className="max-h-[90vh] max-w-full rounded-lg object-contain" onClick={(e) => e.stopPropagation()} />
+    </div>
+  )
+}
 
 const project = projects.find((p) => p.id === 'bcm')!
 
+function SectionHeading({ label }: { label: string }) {
+  return (
+    <div className="mb-6">
+      <p className="text-base font-semibold">
+        <span className="text-amber-600 mr-1">$</span>{label}
+      </p>
+    </div>
+  )
+}
+
+const LABEL_COLOR: Record<string, string> = {
+  문제: 'text-red-500',
+  원인: 'text-orange-500',
+  해결: 'text-blue-500',
+  결과: 'text-green-600',
+}
+
+function TroubleCard({ title, content, index }: { title: string; content: string; index: number }) {
+  const rows = content.split('\n').map((line) => {
+    const colonIdx = line.indexOf(': ')
+    if (colonIdx === -1) return { label: null, text: line }
+    const label = line.slice(0, colonIdx)
+    const text = line.slice(colonIdx + 2)
+    return ['문제', '원인', '해결', '결과'].includes(label)
+      ? { label, text }
+      : { label: null, text: line }
+  })
+
+  return (
+    <div className="border border-border rounded-xl overflow-hidden">
+      <div className="flex items-start gap-3 px-5 py-4 border-b border-border bg-muted/20">
+        <span className="font-mono text-xs text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded shrink-0 mt-0.5">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <h3 className="text-sm font-medium leading-snug">{title}</h3>
+      </div>
+      <div className="px-5 py-4 space-y-3">
+        {rows.map((row, i) =>
+          row.label ? (
+            <div key={i} className="grid grid-cols-[3rem_1fr] gap-x-4 items-start">
+              <span className={`font-mono text-xs pt-0.5 ${LABEL_COLOR[row.label] ?? 'text-amber-600'}`}>{row.label}</span>
+              <p className="text-sm text-muted-foreground leading-relaxed">{row.text}</p>
+            </div>
+          ) : (
+            <p key={i} className="text-sm text-muted-foreground leading-relaxed">{row.text}</p>
+          )
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function ProjectBCM() {
+  const [lightbox, setLightbox] = useState<string | null>(null)
+
   return (
     <main className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Button variant="ghost" size="sm" asChild className="mb-8 -ml-2">
@@ -16,45 +89,65 @@ export default function ProjectBCM() {
         </Link>
       </Button>
 
-      <header className="mb-10">
+      <header className="mb-8">
         <div className="flex items-center gap-2 mb-3">
           <Badge variant="amber">{project.tag}</Badge>
           <span className="font-mono text-xs text-muted-foreground">{project.period}</span>
         </div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">{project.title}</h1>
-        <p className="text-lg text-muted-foreground">{project.subtitle}</p>
-        <p className="text-sm text-muted-foreground mt-1">역할: {project.role}</p>
+        <p className="text-lg text-muted-foreground mb-1">{project.subtitle}</p>
+        <p className="text-sm text-muted-foreground">역할: {project.role}</p>
 
-        <div className="flex flex-wrap gap-2 mt-4">
-          {project.links.map((link) => (
-            <Button key={link.label} variant="outline" size="sm" asChild>
-              <a href={link.url} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-3.5 w-3.5" />
-                {link.label}
-              </a>
-            </Button>
-          ))}
-        </div>
+        {project.links.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {project.links.map((link) => (
+              <Button key={link.label} variant="outline" size="sm" asChild>
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  {link.label}
+                </a>
+              </Button>
+            ))}
+          </div>
+        )}
       </header>
 
-      <section className="mb-10">
-        <h2 className="font-mono text-sm text-amber-600 mb-4">$ cat overview.md</h2>
-        <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-      </section>
+      <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="font-mono text-sm text-amber-600 mb-4">$ cat stack.txt</h2>
+        <SectionHeading label="개요" />
+        {(project.overview ?? project.description).split('\n\n').map((p, i) => (
+          <p key={i} className="text-muted-foreground leading-relaxed mb-3 last:mb-0">{p}</p>
+        ))}
+      </section>
+
+      <Separator className="mb-10" />
+
+      <section className="mb-10">
+        <SectionHeading label="스크린샷" />
+        <div className="grid grid-cols-2 gap-3">
+          {['bcm-1.png', 'bcm-2.png', 'bcm-3.png', 'bcm-4.png'].map((src) => (
+            <img key={src} src={`/${src}`} alt={src} onClick={() => setLightbox(`/${src}`)} className="rounded-lg border border-border w-full object-cover cursor-zoom-in hover:opacity-90 transition-opacity" />
+          ))}
+        </div>
+        {lightbox && <Lightbox src={lightbox} onClose={() => setLightbox(null)} />}
+      </section>
+
+      <Separator className="mb-10" />
+
+      <section className="mb-10">
+        <SectionHeading label="기술 스택" />
         <div className="flex flex-wrap gap-2">
           {project.stack.map((s) => (
-            <Badge key={s} variant="secondary">
-              {s}
-            </Badge>
+            <Badge key={s} variant="secondary">{s}</Badge>
           ))}
         </div>
       </section>
 
+      <Separator className="mb-10" />
+
       <section className="mb-10">
-        <h2 className="font-mono text-sm text-amber-600 mb-4">$ git log --oneline</h2>
+        <SectionHeading label="핵심 구현" />
         <ul className="space-y-3">
           {project.highlights.map((h, i) => (
             <li key={i} className="flex items-start gap-3">
@@ -65,22 +158,33 @@ export default function ProjectBCM() {
         </ul>
       </section>
 
-      <section className="rounded-xl border border-border bg-muted/30 p-6 space-y-4">
-        <h2 className="font-mono text-sm text-amber-600">$ cat lessons.md</h2>
-        <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-          <p>
-            WebSocket(STOMP)로 실시간 입찰을 구현하고, IDOR 취약점을 이중 방어하며
-            보안에 대한 감각을 키웠습니다.
-          </p>
-          <p>
-            TossPayments 서버사이드 결제 승인으로 시크릿 키를 서버에 격리하고,
-            Intersection Observer 무한 스크롤로 사용자 경험을 개선했습니다.
-          </p>
-          <p>
-            BCM은 기술적으로나 팀워크 면에서나 특별히 애착이 가는 프로젝트입니다.
-          </p>
-        </div>
-      </section>
+      {project.troubles && project.troubles.length > 0 && (
+        <>
+          <Separator className="mb-10" />
+          <section className="mb-10">
+            <SectionHeading label="트러블슈팅" />
+            <div className="space-y-4">
+              {project.troubles.map((t, i) => (
+                <TroubleCard key={i} title={t.title} content={t.content} index={i} />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
+
+      {project.retrospective && (
+        <>
+          <Separator className="mb-10" />
+          <section>
+            <SectionHeading label="회고" />
+            <div className="rounded-xl border border-border bg-muted/30 p-6 space-y-3">
+              {project.retrospective.split('\n\n').map((p, i) => (
+                <p key={i} className="text-sm text-muted-foreground leading-relaxed">{p}</p>
+              ))}
+            </div>
+          </section>
+        </>
+      )}
     </main>
   )
 }

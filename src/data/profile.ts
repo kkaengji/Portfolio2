@@ -1,12 +1,14 @@
 export const profile = {
   name: "남경진",
   nameEn: "Namkyungjin",
-  handle: "kkaengji",
+  handle: "Kyungjin",
   role: "Frontend Developer",
   location: "Seoul, Korea",
-  tagline: "DB부터 화면까지 만들던 사람이, 이제 화면을 제대로 만듭니다.",
-  taglineSub:
-    "Frontend Developer · Seoul · 4년 8개월 full-stack → React/Next.js",
+  tagline: [
+    "API와 데이터 흐름을 이해하고,",
+    "맥락이 끊기지 않는 UI를 설계합니다.",
+  ] as const,
+  taglineSub: "Frontend Developer · Seoul · 4년 8개월 경력",
 } as const;
 
 export const contact = {

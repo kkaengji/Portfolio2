@@ -108,7 +108,7 @@
   }
 
   .section-heading {
-    @apply font-mono text-sm text-muted-foreground mb-8;
+    @apply font-mono text-base font-semibold text-muted-foreground mb-8;
   }
 
   .section-heading::before {

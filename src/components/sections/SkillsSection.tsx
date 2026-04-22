@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
+    <section id="skills" className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
       <p className="section-heading">cat ./skills.json</p>
 
       <div className="grid sm:grid-cols-2 gap-6">

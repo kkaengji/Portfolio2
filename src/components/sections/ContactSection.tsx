@@ -1,6 +1,6 @@
 import { contact, profile } from '@/data/profile'
 import { Button } from '@/components/ui/button'
-import { Github, ExternalLink, Mail, Copy, Check } from 'lucide-react'
+import { Github, ExternalLink, Mail, Copy, Check, FileDown } from 'lucide-react'
 import { useState } from 'react'
 
 export function ContactSection() {
@@ -13,8 +13,8 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-      <p className="section-heading">echo $CONTACT</p>
+    <section id="contact" className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+      <p className="section-heading">Contact</p>
 
       <div className="rounded-xl border border-border p-8 text-center space-y-4">
         <h2 className="text-2xl font-bold">함께 만들어봐요</h2>
@@ -37,6 +37,12 @@ export function ContactSection() {
             <a href={`mailto:${contact.email}`}>
               <Mail className="h-4 w-4" />
               메일 보내기
+            </a>
+          </Button>
+          <Button variant="outline" asChild>
+            <a href="/resume.pdf" download>
+              <FileDown className="h-4 w-4" />
+              이력서 다운로드
             </a>
           </Button>
         </div>

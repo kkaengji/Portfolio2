@@ -5,8 +5,8 @@ import { ArrowUpRight } from 'lucide-react'
 
 export function FeaturedSection() {
   return (
-    <section id="featured" className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-      <p className="section-heading">ls -la ./projects</p>
+    <section id="featured" className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+      <p className="section-heading">Projects</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         {featuredProjects.map((project) => (

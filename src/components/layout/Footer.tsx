@@ -1,12 +1,12 @@
-import { contact, profile } from '@/data/profile'
-import { Github, ExternalLink, Mail } from 'lucide-react'
+import { contact, profile } from "@/data/profile";
+import { Github, BookOpen, Mail } from "lucide-react";
 
 export function Footer() {
   return (
     <footer className="border-t border-border mt-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="font-mono text-xs text-muted-foreground">
-          © 2026 {profile.nameEn}. Built with React + Vite.
+          © 2026.04.22 {profile.nameEn}.
         </p>
         <div className="flex items-center gap-4">
           <a
@@ -25,7 +25,7 @@ export function Footer() {
             aria-label="Blog"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ExternalLink className="h-4 w-4" />
+            <BookOpen className="h-4 w-4" />
           </a>
           <a
             href={`mailto:${contact.email}`}
@@ -37,5 +37,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

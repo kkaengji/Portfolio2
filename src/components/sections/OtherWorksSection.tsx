@@ -1,48 +1,45 @@
 import { otherProjects } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
-import { ExternalLink } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 export function OtherWorksSection() {
   return (
-    <section id="other-works" className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-      <p className="section-heading">git log --oneline ./other</p>
+    <section id="other-works" className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+      <p className="section-heading">Experience</p>
 
-      <div className="divide-y divide-border">
+      <div className="space-y-6">
         {otherProjects.map((project) => (
-          <div key={project.id} className="py-5 flex flex-col sm:flex-row sm:items-start gap-3">
-            <div className="sm:w-36 shrink-0">
-              <p className="font-mono text-xs text-muted-foreground">{project.period}</p>
-              <Badge variant="outline" className="mt-1 text-xs">{project.tag}</Badge>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-sm">{project.title}</h3>
-              <p className="text-xs text-muted-foreground mt-0.5 mb-2 leading-relaxed">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {project.stack.map((s) => (
-                  <Badge key={s} variant="mono" className="text-xs">
-                    {s}
-                  </Badge>
-                ))}
+          <div key={project.id} className="rounded-xl border border-border p-6">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Badge variant="outline" className="text-xs">{project.tag}</Badge>
+                  <span className="font-mono text-xs text-muted-foreground">{project.period}</span>
+                </div>
+                <h3 className="text-lg font-semibold">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mt-0.5">{project.subtitle}</p>
               </div>
+              <p className="text-sm text-muted-foreground shrink-0">{project.role}</p>
             </div>
-            {project.links.length > 0 && (
-              <div className="flex gap-2 shrink-0">
-                {project.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
-                  >
-                    <ExternalLink className="h-3 w-3" />
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            )}
+
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              {project.description}
+            </p>
+
+            <ul className="space-y-2 mb-4">
+              {project.highlights.map((h, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <Check className="h-3.5 w-3.5 text-amber-600 mt-0.5 shrink-0" />
+                  <span className="text-sm text-muted-foreground leading-relaxed">{h}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex flex-wrap gap-1.5">
+              {project.stack.map((s) => (
+                <Badge key={s} variant="mono" className="text-xs">{s}</Badge>
+              ))}
+            </div>
           </div>
         ))}
       </div>

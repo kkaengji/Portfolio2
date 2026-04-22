@@ -63,7 +63,7 @@ export const projects: Project[] = [
     ],
     retrospective:
       "잘된 것: FSD + AI 에이전트 병렬 개발 조합이 효과적이었습니다. 레이어 단방향 import 규칙 덕분에 에이전트 간 코드 충돌이 없었고, ui/ → model/ → api/ 순서로 세션을 나눠도 중단·재개가 자연스러웠습니다. 인증 설계도 httpOnly 쿠키 + 메모리 토큰 조합으로 XSS 노출 면적을 최소화하고, 401 자동 재시도 인터셉터가 TanStack Query 에러 흐름과 자연스럽게 통합됐습니다.\n\n아쉬운 것: TierLevel 대소문자 불일치로 25개 파일을 전면 수정해야 했습니다. 백엔드 API 스펙 확인 없이 프론트 편의 기준으로 타입을 먼저 정의한 결과입니다. 예매 Zustand store도 늦게 도입되어 일부 컴포넌트에 props drilling 코드가 잔존합니다. 여러 라우트에 걸치는 상태는 초기 설계 시 스토어로 먼저 정의해야 한다는 교훈을 얻었습니다.",
-    links: [{ label: "Demo", url: "https://urr.guru" }],
+    links: [{ label: "GitHub", url: "https://github.com/KTCloud-TechUp/urr-frontend" }],
     featured: true,
     tag: "대표 프로젝트",
   },
@@ -108,10 +108,7 @@ export const projects: Project[] = [
     ],
     retrospective:
       "실시간 입찰 방식을 선택할 때 폴링 → SSE → WebSocket을 직접 비교하면서, '실시간이면 WebSocket'이 아니라 단방향/양방향, 서버 부하, 구조 복잡도를 기준으로 기술을 선택하는 방식을 처음으로 문서화해 봤습니다. IDOR를 프론트에서 직접 방어하면서 '서버가 막아주면 된다'는 생각 대신 프론트도 보안 레이어의 일부라는 인식이 생겼습니다.\n\n아쉬운 점은 실제 동시 입찰 트래픽에 대한 부하 테스트를 끝까지 진행하지 못한 것입니다. 다음 프로젝트에서는 초기 설계 단계부터 부하 테스트 시나리오를 포함할 계획입니다.",
-    links: [
-      { label: "Demo", url: "https://bcm.u-jinlee1029.store" },
-      { label: "YouTube", url: "https://www.youtube.com/watch?v=dM07anPjfsk" },
-    ],
+    links: [{ label: "GitHub", url: "https://github.com/kt-merge/bcm-front-repository" }],
     featured: true,
     tag: "팀 프로젝트",
   },

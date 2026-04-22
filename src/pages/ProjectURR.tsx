@@ -3,7 +3,7 @@ import { projects } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { ArrowLeft, ExternalLink, Check, X } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github, Check, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
@@ -103,7 +103,7 @@ export default function ProjectURR() {
             {project.links.map((link) => (
               <Button key={link.label} variant="outline" size="sm" asChild>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3.5 w-3.5" />
+                  {link.label === 'GitHub' ? <Github className="h-3.5 w-3.5" /> : <ExternalLink className="h-3.5 w-3.5" />}
                   {link.label}
                 </a>
               </Button>
